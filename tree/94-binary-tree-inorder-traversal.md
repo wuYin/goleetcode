@@ -223,7 +223,7 @@ func inorderTraversal(root *TreeNode) []int {
 			parent := stack[len(stack)-1] // 回溯处理节点值（左子节点和父节点）
 			stack = stack[:len(stack)-1]
 			res = append(res, parent.Val)
-			cur = parent.Right // 处理左子节点
+			cur = parent.Right // 处理右子节点
 		}
 	}
 
