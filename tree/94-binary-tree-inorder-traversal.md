@@ -96,13 +96,17 @@ func main() {
 
 对于二叉树有 **3** 种遍历方式：
 
-- 前序遍历（`Pre Order`）
-  - 对节点的处理先于两个儿子节点，**父节点 -> 左儿子 -> 右儿子**
-  - 按层向下处理，宽度优先遍历 `BFS`
+- 前序遍历（`Pre Order`）：对节点的处理先于两个儿子节点，**父节点 -> 左儿子 -> 右儿子**
+
+  ![image-20181126204642033](https://images.yinzige.com/2018-11-26-124642.png)
+
 - 中序遍历（`In Order`）：**左儿子 -> 父节点 -> 右儿子**
-- 后序遍历（`Post Order`）
-  - 对节点的处理晚于两个儿子节点，**左节点 -> 右儿子 -> 父节点**
-  - 从最深的节点开始处理，深度优先遍历 `DFS`
+
+  ![image-20181126204614505](https://images.yinzige.com/2018-11-26-124615.png)
+
+- 后序遍历（`Post Order`）：对节点的处理晚于两个儿子节点，**左节点 -> 右儿子 -> 父节点**
+
+  ![image-20181126204544321](https://images.yinzige.com/2018-11-26-124545.png)
 
 3 种遍历方式只是父节点处理时机不同，均可用递归实现。
 
@@ -119,10 +123,10 @@ func preorderTraversal(node *TreeNode) {
 	if node == nil { // 遍历递归退出条件，必不可少
 		return
 	}
-	fmt.Println(node.Val)
 	if node.Left != nil {
 		preorderTraversal(node.Left)
 	}
+	fmt.Println(node.Val)
 	if node.Right != nil {
 		preorderTraversal(node.Right)
 	}
