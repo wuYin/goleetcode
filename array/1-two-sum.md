@@ -28,19 +28,18 @@ tags: [数组, 简单]
 
 ```go
 func twoSum(nums []int, target int) []int {
-	n2i := make(map[int]int)
+	m := make(map[int]int)
 	for i, num := range nums {
-		diff := target - num
-		if j, ok := n2i[diff]; ok && i != j { // 不能使用相同元素
+		if j, ok := m[target-num]; ok && j != i { // 不能使用相同元素
 			return []int{i, j}
 		}
-		n2i[num] = i
+		m[num] = i
 	}
 	return nil
 }
 ```
 
-耗时：8 ms
+耗时：**8 ms (100%)**
 
 
 
