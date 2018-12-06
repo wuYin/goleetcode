@@ -91,9 +91,9 @@ func levelOrder(root *TreeNode) [][]int {
 }
 
 func traverse(root *TreeNode, depth int, floors *[][]int) {
-	// 无法对 floors 进行数组的 append 操作
-	// *floors[depth] = append(*floors[depth], node.Val) // not ok
-	// 所以直接在函数内部使用局部变量
+	// *floors[depth] = append(*floors[depth], node.Val) 	 // not ok
+	// (*floors)[depth] = append((*floors)[depth], node.Val) // ok
+	// 或者向上边一样直接在函数内部使用局部变量
 }
 ```
 
