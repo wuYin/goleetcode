@@ -85,23 +85,22 @@ func deleteNode(root *TreeNode, key int) *TreeNode {
 			return root.Left
 		}
 
-		// 有两个子节点，找到值向上最接近的节点，替换掉
-		root.Val = ceil(root.Right)
-		root.Right = deleteNode(root.Right, root.Val) // 在右子树中删除该节点
+		// 有两个子节点，找到值向下最接近的节点，替换掉
+		root.Val = floor(root.Left)
+		root.Left = deleteNode(root.Left, root.Val) // 在左子树中删除该节点
 	}
 
 	return root
 }
 
-// 查找右子树上的最左节点
-func ceil(root *TreeNode) int {
-	for root.Left != nil {
-		root = root.Left
+// 查找左子树上的最右节点
+func floor(root *TreeNode) int {
+	for root.Right != nil {
+		root = root.Right
 	}
+
 	return root.Val
 }
-
-// 也可以查找左子树的最有节点
 ```
 
 **404 ms, faster than 52.94%**
