@@ -4,7 +4,7 @@ date: 2018-11-20 01:12:13
 tags: [数组, 简单]
 ---
 
-原地算法考虑双指针。
+充分利用数组已有序的已知条件，使用双指针 swap 元素。
 
 <!-- more -->
 
@@ -43,7 +43,24 @@ func removeDuplicates(nums []int) int {
 
 ### 最佳实现
 
-如上
+二刷发现上边快慢指针的做法并没有充分利用数组有序这一已知条件，可以直接从 0 向后遍历，遇到比自己大的值就 swap 到自己的下一个：
+
+```go
+func removeDuplicates2(nums []int) int {
+	n := len(nums)
+	l, r := 0, 1
+	for r < n {
+		if nums[l] < nums[r] { // 比我大就放到我的下一个
+			l++
+			nums[l], nums[r] = nums[r], nums[l]
+		}
+		r++
+	}
+	return l + 1
+}
+```
+
+其实这也是快慢指针。
 
 
 

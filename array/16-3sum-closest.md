@@ -31,7 +31,7 @@ func threeSumClosest(nums []int, target int) int {
 
 	for i := 0; i < len(nums); i++ {
 		if i > 0 && nums[i] == nums[i-1] {
-			continue // 依旧遍历数去重，必需的
+			continue // 依旧遍历数向前去重，不是必需的
 		}
 
 		l, r := i+1, len(nums)-1
