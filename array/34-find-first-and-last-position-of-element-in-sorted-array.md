@@ -78,69 +78,48 @@ func binarySearch(nums []int, l, r int, target int) int {
 可对二分搜索进行微调，在第一次寻找到值不停下来，而是一直寻找边界值，2 个方向二分搜索的复杂度为 `O(logN) `级别。微调实现：
 
 ```go
-func searchRange(nums []int, target int) []int {
-	edges := []int{-1, -1}
-	n := len(nums)
-	switch {
-	case n <= 0:
-		return edges // not ok
-	case n == 1:
-		if nums[0] == target {
-			return []int{0, 0}
-		} else {
-			return edges // not ok
-		}
-	}
-
-	l, r := 0, n-1
-	for l < r {
-		mid := (l + r) / 2
-		if target == nums[mid] {
-			edges[0] = mid
-		}
-		if target <= nums[mid] {
-			r = mid
-		} else {
-			l = mid + 1 // l 向左边缘逼近
-		}
-	}
-
-	if nums[l] == target {
-		edges[0] = l // 注意处理此种 case: 退出搜索时 l 可能等于 r，同时可能携带边界值
-	} else {
-		return edges // not ok
-	}
-
-	l, r = 0, n-1
-	for l < r {
-		mid := (l + r) / 2
-		if nums[mid] == target {
-			edges[1] = mid
-		}
-		if target >= nums[mid] {
-			l = mid + 1 // l 向右边缘逼近
-		} else {
-			r = mid
-		}
-	}
-	if nums[l] == target {
-		edges[1] = l // 处理边界值
-	}
-
-	return edges
+// 改进的二分搜索
+func searchRange2(nums []int, target int) []int {
+	l := edgeBinSearch(nums, true, target)
+	r := edgeBinSearch(nums, false, target)
+	return []int{l, r}
 }
+
+// 搜索时在匹配到 target 之后依旧向边缘走当做没匹配到，注意 2 个边界条件
+func edgeBinSearch(nums []int, leftest bool, target int) int {
+	n := len(nums)
+	l, r := 0, n-1
+	for l <= r {
+		mid := (l + r) / 2
+		switch {
+		case target < nums[mid]:
+			r = mid - 1
+		case target > nums[mid]:
+			l = mid + 1
+		default:
+			if leftest {
+				if mid == 0 || nums[mid] > nums[mid-1] { // 不再继续向左走的 2 个边界条件
+					return mid
+				}
+				r = mid - 1 // 继续在左侧找
+			} else {
+				if mid == n-1 || nums[mid] < nums[mid+1] { // 不往右走了，取边界值
+					return mid
+				}
+				l = mid + 1 // 继续在右侧找
+			}
+		}
+	}
+	return -1
+}
+
 ```
 
 执行耗时：**12 ms (100%)**
 
-<div class="tip">
-    注意 edges 两个元素的取值，以及退出搜索后对边界值的处理。
-</div>
-
-
 ## 最佳实现
 
-如上的微调二分搜索。
+如上改进后的二分搜索。
 
 
 

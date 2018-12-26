@@ -32,28 +32,26 @@ Binary Search 在涉及有序数组及其变种的问题中应用很多，但在
 // 类二分查找
 func search(nums []int, target int) int {
 	l, r := 0, len(nums)-1
-
 	for l <= r {
 		mid := (l + r) / 2
-
 		switch {
 		case nums[mid] == target: // bingo
 			return mid
-		case nums[l] <= nums[mid]: // 左半部分有序
-			if nums[l] <= target && target < nums[mid] { // 注意 <= 比较
-				r = mid - 1 // 排除右半边
+		case nums[l] <= nums[mid]: // 左侧有序
+			if nums[l] <= target && target < nums[mid] { // 保证 target 一定在有序的左侧内
+				r = mid - 1
 			} else {
-				l = mid + 1 // 排除左半边
+				l = mid + 1
 			}
-		case nums[mid] < nums[r]: // 右侧有序
-			if nums[mid] < target && target <= nums[r] {
+		case nums[mid] <= nums[r]: // 右侧有序
+			if nums[mid] < target && target <= nums[r] { // 保证 target 一定在有序的右侧内
 				l = mid + 1
 			} else {
 				r = mid - 1
 			}
 		}
 	}
-
+	
 	return -1
 }
 ```
